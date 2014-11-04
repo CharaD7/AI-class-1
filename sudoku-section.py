@@ -48,6 +48,9 @@ def get_all_related_cells(new_Grid):
     return all_vec
     
 def get_legal_for_cell(cell_r, cell_c, new_Grid):
+    if new_Grid[cell_r][cell_c]!='.':
+        return [None]
+
     map = {}
     all_vec = get_all_related_cells(new_Grid)
     for a in all_vec:
@@ -88,24 +91,16 @@ def print_grid(new_Grid):
     print
 
 def solve_step_in_sudoko(last_Grid, r, c):
-    new_Grid = deepcopy(last_Grid)
-    
     complete = False        # complete flag initialization
-    unknown_cell = True     # unknown_cell flag initialization
-    
-    if is_complete(new_Grid):
+    if is_complete(last_Grid):
         complete = True
-    
-    if new_Grid[r][c]!='.':
-        unknown_cell = False
-        legal_for_cell = [None]
-    else:
-        legal_for_cell = get_legal_for_cell(r, c, new_Grid)
+    legal_for_cell = get_legal_for_cell(r, c, last_Grid)
     
     for item in legal_for_cell:
+        new_Grid = deepcopy(last_Grid)
         if complete:
             break
-        if unknown_cell:
+        if not last_Grid[r][c]!='.':
             new_Grid[r][c] = item
         new_r, new_c = get_new_r_c(r, c)
 
