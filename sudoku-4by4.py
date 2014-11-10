@@ -56,10 +56,10 @@ def get_legal_for_cell(cell_r, cell_c, new_Grid):
     for a in all_vec:
         if (cell_r, cell_c) in a.keys():
             del a[(cell_r, cell_c)]
-            map.update(a)
+            map.update(a)          # no duplicates      # print a
 
     exist = []
-    for m in map:
+    for m in map:                  # get key from keys
         if not map[m]=='.':
             exist.append(map[m])
 
@@ -91,35 +91,19 @@ def print_grid(new_Grid):
     print
 
 def solve_step_in_sudoko(last_Grid, r, c):
-    complete = False        # complete flag initialization
     if is_complete(last_Grid):
-        complete = True
+        print 'Complete:'
+        print_grid(last_Grid)
+        return 0
+##    print_grid(last_Grid)
     legal_for_cell = get_legal_for_cell(r, c, last_Grid)
-    
+
     for item in legal_for_cell:
         new_Grid = deepcopy(last_Grid)
-        if complete:
-            break
         if not last_Grid[r][c]!='.':
             new_Grid[r][c] = item
         new_r, new_c = get_new_r_c(r, c)
 
-        returned_Grid = solve_step_in_sudoko(new_Grid, new_r, new_c)
-        if not returned_Grid==None:
-            complete = True     # to deliver returned value from /
-                                # deep function to current one
-            new_Grid = returned_Grid
+        solve_step_in_sudoko(new_Grid, new_r, new_c)
 
-    if complete:
-        return new_Grid
-
-print_grid(solve_step_in_sudoko(Grid, 0, 0))
-                
-
-##for s in squares:   
-##    print s
-
-##print get_legal_for_cell(0, 0, Grid)
-##all_related_cells = get_all_related_cells(Grid)
-##for a in all_related_cells:
-##    print a
+solve_step_in_sudoko(Grid, 0, 0)
