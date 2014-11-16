@@ -100,7 +100,7 @@ def solve_step_in_sudoko(last_Grid, r, c):
 
     for item in legal_for_cell:
         new_Grid = deepcopy(last_Grid)
-        if not last_Grid[r][c]!='.':
+        if last_Grid[r][c]=='.':
             new_Grid[r][c] = item
         new_r, new_c = get_new_r_c(r, c)
 
