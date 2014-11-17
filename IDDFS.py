@@ -10,12 +10,13 @@ def dfs_paths(graph, start, goal, limit):
     stack = [(start, [start])]
     while stack:
         (vertex, path) = stack.pop()
-        depth = len(path)        
-        for next in graph[vertex] - set(path):
-            if next == goal:
-                paths.append(path + [next])
-            else:
-                if(depth+1<=limit):        
+        ## depth('A')=1,limit=1,add_or_check('B','C')
+        depth = len(path)
+        if depth<=limit:
+            for next in graph[vertex] - set(path):
+                if next == goal:
+                    paths.append(path + [next])
+                else:
                     stack.append((next, path + [next]))
     return paths
 
