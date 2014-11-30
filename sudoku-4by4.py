@@ -55,7 +55,6 @@ def get_legal_for_cell(cell_r, cell_c, new_Grid):
     all_vec = get_all_related_cells(new_Grid)
     for a in all_vec:
         if (cell_r, cell_c) in a.keys():
-            del a[(cell_r, cell_c)]
             map.update(a)          # no duplicates      # print a
 
     exist = []
